@@ -1,0 +1,22 @@
+{
+  "name": "flashcard_generator",
+  "version": "1.0.0",
+  "description": "Flashcard / Clozecard Generator",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhouse00/Flashcard-Generator.git"
+  },
+  "author": "ryan house",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rhouse00/Flashcard-Generator/issues"
+  },
+  "homepage": "https://github.com/rhouse00/Flashcard-Generator#readme",
+  "dependencies": {
+    "inquirer": "^2.0.0"
+  }
+}
