@@ -1,0 +1,12 @@
+<span class='question'>Who has been the US President the last 8 years?</span>
+<span class='answer'>Obama</span>
+<span class='question'>What is Apple's top selling product?</span>
+<span class='answer'>iPhone</span>
+<span class='question'>Who was the first President?</span>
+<span class='answer'>George Washington</span>
+<span class='question'>Who was the lead actor in Forest Gump?</span>
+<span class='answer'>Tom Hanks</span>
+<span class='question'>Who am I?</span>
+<span class='answer'>Ryan</span>
+<span class='question'>Is UCLA Bootcamp fun?</span>
+<span class='answer'>Yes</span>

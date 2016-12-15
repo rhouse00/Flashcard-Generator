@@ -1,0 +1,3 @@
+
+<span class='statement'>... was the first president.</span>
+<span class='subject'>George Washington</span>

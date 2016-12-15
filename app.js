@@ -1,4 +1,7 @@
 var inquirer = require("inquirer");
+var fs = require("fs");
+var flashcard = require("./flash.js");
+var clozecard = require("./cloze.js");
 
 inquirer.prompt([
 	{
@@ -10,62 +13,84 @@ inquirer.prompt([
 	]).then(function(response){
 		switch (response.action) {
 			case "Create Clozecard":
-			createClozecard();
+			clozecard.Create();
 			break;
 			case "Create Flashcard":
-			createFlashcard();
+			flashcard.Create();
 			break;
 			case "Play with Flashcards":
-			//function name
+			playFlashcard();
 			break;
 			case "Play with Clozecards":
-			//function name
+			playClozecard();
 			break;
 		}
 });
 
 
 
-function createClozecard(){
-	inquirer.prompt([
-		{
-			type: "input",
-			message: "What's your statement",
-			name: "question"
+var x = 0;
+function playFlashcard(x){
+	x = 0;
+	fs.readFile("flashcard.txt", "utf8", function(error, data){
+		if(error){
+			console.log(error);
 		}
-		]).then(function(response){
-			var questionArray = response.question.split(" ");
-			console.log(questionArray);
-			inquirer.prompt([	
+		data = data.split("\n");
+		// for(var i = 0; i < data.length; i++){
+		// 	if(i == 0 || i % 2 == 0) {
+		// 		console.log(data[i]);
+		// 		inquirer.prompt([
+		// 			{
+		// 				type: "confirm",
+		// 				message:" --- press (Y) for answer:",
+		// 				name:"question"
+		// 			}
+		// 		]).then(function(){
+		// 			console.log(data[i+1]);
+		// 		});
+		// 	}
+		// };
+		console.log(x);
+
+		if(x == 0 || x % 2 == 0) {
+			console.log(data[x]);
+			inquirer.prompt([
 				{
-					type: "checkbox",
-					message: "and what words do you want to guess?",
-					choices: questionArray,
-					name: "cloze"
+					type: "confirm",
+					message:" --- press (Y) for answer:",
+					name:"question"
 				}
-			]).then(function(answer){
-				console.log(answer.cloze);
+			]).then(function(){
+				x+1;
+				console.log(data[x]);
+				x+1;
+				playFlashcard(x);
 			});
-		});
-};
-
-
-function createFlashcard (){
-	inquirer.prompt([
-		{
-			type: "input",
-			message: "What's your question?",
-			name: "question"
-		},
-		{
-			type: "input",
-			message: "and what is the answer?",
-			name: "answer"
 		}
-		]).then(function(flash){
-			console.log(flash.question + " --- " + flash.answer);
-		});
+		
+		
+	});
+
 };
 
+
+// function getFlashCards(x, data){
+// 	if(x == 0 || x % 2 == 0) {
+// 		console.log(data[x]);
+// 		inquirer.prompt([
+// 			{
+// 				type: "confirm",
+// 				message:" --- press (Y) for answer:",
+// 				name:"question"
+// 			}
+// 		]).then(function(){
+// 			x+1
+// 			console.log(data[x]);
+// 		});
+// 	}
+// 	x+1;
+// 	getFlashCards(x);
+// }
 
 
