@@ -1,3 +1,4 @@
-
-<span class='statement'>... was the first president.</span>
-<span class='subject'>George Washington</span>
+... was the first president.
+George Washington
+... was elected US president 4 times! 
+FDR

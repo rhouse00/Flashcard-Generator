@@ -1,8 +1,9 @@
 var fs = require("fs");
 var inquirer = require("inquirer");
 
-module.exports = {
-	Create: function(){
+
+var flashcard = {
+	create: function(){
 			inquirer.prompt([
 			{
 				type: "input",
@@ -20,14 +21,41 @@ module.exports = {
 					newQ.add();
 				});
 	},
+	play: function(x){
+		fs.readFile("flashcard.txt", "utf8", function(error, data){
+			if(error){
+				console.log(error);
+			}
+			data = data.split("\n");
+			if(x >= data.length){
+				console.log("**** No more cards. Try adding more! ****");
+				return true;
+			}
+			if(x == 0 || x % 2 == 0) {
+				console.log("---\n   ---\n\tQuestion: " + data[x] + "\n   ---\n---");
+				inquirer.prompt([
+					{
+						type: "confirm",
+						message:" ~~~ press the <return / enter> key when you're ready for the answer ~~~",
+						name:"question"
+					}
+				]).then(function(){
+					x++;
+					console.log("***\n   ***\n\tAnswer: " + data[x] + "\n   ***\n***");
+					x++;
+					flashcard.play(x);
+				});
+			}
+		});
+	}
 };
-
 
 function addQuestion(front, back){
 	this.front = front;
 	this.back = back;
 	this.add = function() {
-		fs.appendFile("flashcard.txt", "\n<span class='question'>" + this.front + "</span>\n<span class='answer'>" + this.back + "</span>");
-		// console.log('got added');
+		fs.appendFile("flashcard.txt", "\n" + this.front + "\n" + this.back);
 	}
 };
+
+module.exports = flashcard;

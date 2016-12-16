@@ -1,8 +1,8 @@
 var fs = require("fs");
 var inquirer = require("inquirer");
 
-module.exports = {
-	Create: function(){
+var clozecard = {
+	create: function(){
 		inquirer.prompt([
 			{
 				type: "input",
@@ -27,6 +27,35 @@ module.exports = {
 					newQ.addText();
 				});
 			});
+	},
+	play: function(x){
+		fs.readFile("clozecard.txt", "utf8", function(error, data){
+			if(error){
+				console.log(error);
+			}
+			data = data.split("\n");
+			if(x >= data.length){
+				console.log("**** No more cards. Try adding more! ****");
+				return true;
+			}
+			if(x == 0 || x % 2 == 0) {
+				console.log("---\n   ---\n\tStatement: " + data[x] + "\n   ---\n---");
+				inquirer.prompt([
+					{
+						type: "confirm",
+						message:" ~~~ press the <return / enter> key when you're ready for the answer ~~~",
+						name:"question"
+					}
+				]).then(function(){
+					var truncatedText = data[x];
+					x++;
+					var fulltext = truncatedText.replace("...", data[x]);
+					console.log("***\n   ***\n\tAnswer: " + fulltext + "\n   ***\n***");
+					x++;
+					clozecard.play(x);
+				});
+			}
+		});
 	}
 };
 
@@ -34,7 +63,8 @@ function addCloze(text, cloze){
 	this.text = text;
 	this.cloze = cloze;
 	this.addText = function(){
-		fs.appendFile("clozecard.txt", "\n<span class='statement'>" + this.text + "</span>\n<span class='subject'>" + this.cloze + "</span>");
+		fs.appendFile("clozecard.txt", "\n" + this.text + "\n" + this.cloze);
 	}
-
 };
+
+module.exports = clozecard;
